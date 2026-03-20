@@ -1,4 +1,4 @@
-import HeroImage from "/assets/hero-img.webp";
+import HeroImage from "/assets/foto.jpg";
 
 const Image = {
   HeroImage,
@@ -8,17 +8,17 @@ export default Image;
 
 import Tools1 from "/assets/tools/vscode.png";
 import Tools2 from "/assets/tools/reactjs.png";
-import Tools3 from "/assets/tools/nextjs.png";
 import Tools4 from "/assets/tools/tailwind.png";
 import Tools5 from "/assets/tools/bootstrap.png";
 import Tools6 from "/assets/tools/js.png";
 import Tools7 from "/assets/tools/nodejs.png";
 import Tools8 from "/assets/tools/github.png";
-import Tools9 from "/assets/tools/ai.png";
 import Tools10 from "/assets/tools/canva.png";
 import Tools11 from "/assets/tools/figma.png";
 import Tools12 from "/assets/tools/php.svg";
 import Tools13 from "/assets/tools/laravel.svg";
+import Tools14 from "/assets/tools/postgresql.svg";
+import Tools15 from "/assets/tools/mysql.svg";
 
 export const listTools = [
   {
@@ -34,13 +34,6 @@ export const listTools = [
     nama: "React JS",
     ket: "Framework",
     dad: "200",
-  },
-  {
-    id: 3,
-    gambar: Tools3,
-    nama: "Next JS",
-    ket: "Framework",
-    dad: "300",
   },
   {
     id: 4,
@@ -78,13 +71,6 @@ export const listTools = [
     dad: "800",
   },
   {
-    id: 9,
-    gambar: Tools9,
-    nama: "Adobe Illustrator",
-    ket: "Design App",
-    dad: "900",
-  },
-  {
     id: 10,
     gambar: Tools10,
     nama: "Canva",
@@ -111,6 +97,20 @@ export const listTools = [
     nama: "Laravel",
     ket: "Framework",
     dad: "1300",
+  },
+  {
+    id: 14,
+    gambar: Tools14,
+    nama: "PostgreSQL",
+    ket: "Database",
+    dad: "1400",
+  },
+  {
+    id: 15,
+    gambar: Tools15,
+    nama: "MySQL",
+    ket: "Database",
+    dad: "1500",
   },
 ];
 
