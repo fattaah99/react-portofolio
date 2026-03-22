@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { listProyek } from "../data.js";
 
-const allTags = ["Semua", "HTML/CSS", "ReactJS", "NextJS", "Bootstrap"];
-
-const tagMatch = (tools, tag) => {
-    if (tag === "Semua") return true;
-    if (tag === "HTML/CSS") return tools.some((t) => t === "HTML" || t === "CSS");
-    return tools.some((t) => t.toLowerCase().includes(tag.toLowerCase()));
-};
-
 const Proyek = () => {
+    // Ambil semua kategori unik dari data, tambahkan "Semua" di depan
+    const allTags = ["Semua", ...new Set(listProyek.map((p) => p.kategori).filter(Boolean))];
+
     const [active, setActive] = useState("Semua");
 
-    const filtered = listProyek.filter((p) => tagMatch(p.tools, active));
+    const filtered = listProyek.filter(
+        (p) => active === "Semua" || p.kategori === active
+    );
 
     return (
         <section id="proyek" className="py-20">
@@ -24,7 +21,7 @@ const Proyek = () => {
                     </h2>
                     <div className="w-16 h-1 bg-gradient-to-r from-teal-400 to-indigo-400 mx-auto rounded-full" />
                     <p className="text-zinc-400 mt-4 max-w-md mx-auto text-sm">
-                        Beberapa proyek yang pernah saya kerjakan.
+                        Proyek yang pernah saya kerjakan.
                     </p>
                 </div>
 
@@ -45,9 +42,11 @@ const Proyek = () => {
                 </div>
 
                 {/* Projects Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className={`flex ${filtered.length === 1 ? "justify-center" : "flex-wrap"} gap-6`}>
                     {filtered.map((proyek) => (
-                        <TiltCard key={proyek.id} proyek={proyek} />
+                        <div key={proyek.id} className={filtered.length === 1 ? "w-full max-w-sm" : "w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)]"}>
+                            <TiltCard proyek={proyek} />
+                        </div>
                     ))}
                 </div>
             </div>
@@ -91,7 +90,7 @@ const TiltCard = ({ proyek }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                     <a
-                        href="#"
+                        href={proyek.link ?? "#"}
                         className="btn-glow bg-teal-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-teal-400 transition-colors duration-200"
                     >
                         Lihat Demo 🚀
