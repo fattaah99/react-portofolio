@@ -1,3 +1,18 @@
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+
+// ── EmailJS config ──────────────────────────────────────────────────────────
+// 1. Daftar di https://www.emailjs.com  (gratis 200 email/bulan)
+// 2. Buat Email Service  → salin SERVICE_ID
+// 3. Buat Email Template → salin TEMPLATE_ID
+//    Variabel template yang dipakai: {{from_name}}, {{from_email}}, {{message}}
+// 4. Buka Account → API Keys → salin PUBLIC_KEY
+// Lalu isi ketiga nilai di bawah ini:
+const SERVICE_ID = "service_2vnniwa";   // ganti ini
+const TEMPLATE_ID = "template_murq6dr"; // ganti ini
+const PUBLIC_KEY = "mKkeXJ_UqUto2Z6JM";  // ganti ini
+// ────────────────────────────────────────────────────────────────────────────
+
 const contactItems = [
     {
         icon: "📧",
@@ -20,6 +35,43 @@ const contactItems = [
 ];
 
 const Kontak = () => {
+    const formRef = useRef(null);
+    const [status, setStatus] = useState("idle"); // idle | sending | success | error
+    const [form, setForm] = useState({ nama: "", email: "", pesan: "" });
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (status === "sending") return;
+
+        setStatus("sending");
+
+        emailjs
+            .send(
+                SERVICE_ID,
+                TEMPLATE_ID,
+                {
+                    name: form.nama,
+                    from_email: form.email,
+                    message: form.pesan,
+                },
+                PUBLIC_KEY
+            )
+            .then(() => {
+                setStatus("success");
+                setForm({ nama: "", email: "", pesan: "" });
+                setTimeout(() => setStatus("idle"), 5000);
+            })
+            .catch((err) => {
+                console.error("EmailJS error:", err);
+                setStatus("error");
+                setTimeout(() => setStatus("idle"), 5000);
+            });
+    };
+
     return (
         <section id="kontak" className="py-20 relative overflow-hidden">
             <div className="absolute inset-0 bg-zinc-800/20 pointer-events-none" />
@@ -80,12 +132,16 @@ const Kontak = () => {
 
                     {/* Form — right */}
                     <div className="md:col-span-3" data-aos="fade-left" data-aos-duration="800">
-                        <form className="glass rounded-2xl p-6 flex flex-col gap-4">
+                        <form ref={formRef} onSubmit={handleSubmit} className="glass rounded-2xl p-6 flex flex-col gap-4">
                             {/* Nama */}
                             <div>
                                 <label className="block text-sm font-medium text-zinc-300 mb-1.5">Nama</label>
                                 <input
                                     type="text"
+                                    name="nama"
+                                    value={form.nama}
+                                    onChange={handleChange}
+                                    required
                                     placeholder="Masukkan nama kamu"
                                     className="w-full bg-zinc-900/60 border border-zinc-700 focus:border-teal-500 text-white placeholder-zinc-500 rounded-lg px-4 py-3 outline-none transition-colors duration-200 text-sm"
                                 />
@@ -96,6 +152,10 @@ const Kontak = () => {
                                 <label className="block text-sm font-medium text-zinc-300 mb-1.5">Email</label>
                                 <input
                                     type="email"
+                                    name="email"
+                                    value={form.email}
+                                    onChange={handleChange}
+                                    required
                                     placeholder="Masukkan email kamu"
                                     className="w-full bg-zinc-900/60 border border-zinc-700 focus:border-teal-500 text-white placeholder-zinc-500 rounded-lg px-4 py-3 outline-none transition-colors duration-200 text-sm"
                                 />
@@ -105,17 +165,44 @@ const Kontak = () => {
                             <div>
                                 <label className="block text-sm font-medium text-zinc-300 mb-1.5">Pesan</label>
                                 <textarea
+                                    name="pesan"
+                                    value={form.pesan}
+                                    onChange={handleChange}
+                                    required
                                     rows={5}
                                     placeholder="Tulis pesanmu di sini..."
                                     className="w-full bg-zinc-900/60 border border-zinc-700 focus:border-teal-500 text-white placeholder-zinc-500 rounded-lg px-4 py-3 outline-none transition-colors duration-200 text-sm resize-none"
                                 />
                             </div>
 
+                            {/* Feedback message */}
+                            {status === "success" && (
+                                <div className="flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 text-teal-400 rounded-lg px-4 py-3 text-sm">
+                                    <span>✅</span> Pesan berhasil dikirim! Saya akan segera membalas.
+                                </div>
+                            )}
+                            {status === "error" && (
+                                <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg px-4 py-3 text-sm">
+                                    <span>❌</span> Gagal mengirim pesan. Silakan coba lagi atau hubungi via email langsung.
+                                </div>
+                            )}
+
                             <button
                                 type="submit"
-                                className="btn-glow bg-teal-500 hover:bg-teal-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 w-full mt-1"
+                                disabled={status === "sending"}
+                                className="btn-glow bg-teal-500 hover:bg-teal-400 disabled:bg-teal-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 w-full mt-1 flex items-center justify-center gap-2"
                             >
-                                Kirim Pesan ✉️
+                                {status === "sending" ? (
+                                    <>
+                                        <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                                        </svg>
+                                        Mengirim...
+                                    </>
+                                ) : (
+                                    "Kirim Pesan ✉️"
+                                )}
                             </button>
                         </form>
                     </div>
