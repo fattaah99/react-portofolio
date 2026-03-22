@@ -115,7 +115,7 @@ const Kontak = () => {
                             {[
                                 { label: "GitHub", href: "https://github.com/fattaah99" },
                                 { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammad-fattaah-al-rasyidin/" },
-                                { label: "YouTube", href: "#" },
+                                { label: "Instagram", href: "https://www.instagram.com/muhammadfattaahal/" },
                             ].map((s) => (
                                 <a
                                     key={s.label}
