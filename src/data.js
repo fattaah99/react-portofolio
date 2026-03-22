@@ -115,6 +115,7 @@ export const listTools = [
 ];
 
 import Proyek1 from "/assets/proyek/e-commerce_flutter.png";
+import Proyek2 from "/assets/proyek/333shots_so.png";
 
 export const listProyek = [
   {
@@ -122,9 +123,19 @@ export const listProyek = [
     gambar: Proyek1,
     nama: "E-Commerce Flutter",
     desk: "Aplikasi e-commerce mobile yang dibangun menggunakan Flutter dengan fitur autentikasi, katalog produk, dan manajemen pesanan.",
-    tools: ["Flutter", "Dart", "Firebase"],
+    tools: ["Flutter", "Dart"],
     kategori: "Mobile App",
-    link: "#",
+    link: "https://github.com/fattaah99/e-commerce-application",
     dad: "200",
+  },
+  {
+    id: 2,
+    gambar: Proyek2,
+    nama: "REST API E-Commerce",
+    desk: "Backend REST API untuk platform e-commerce, mencakup manajemen pengguna, produk, dan operasi CRUD.",
+    tools: [".NET", "C#"],
+    kategori: "Backend",
+    link: "https://github.com/fattaah99/.Net-api-E-commerce",
+    dad: "300",
   },
 ];

@@ -32,8 +32,8 @@ const Proyek = () => {
                             key={tag}
                             onClick={() => setActive(tag)}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${active === tag
-                                    ? "bg-teal-500 border-teal-500 text-white shadow-lg shadow-teal-500/30"
-                                    : "border-zinc-700 text-zinc-400 hover:border-teal-500/60 hover:text-teal-400"
+                                ? "bg-teal-500 border-teal-500 text-white shadow-lg shadow-teal-500/30"
+                                : "border-zinc-700 text-zinc-400 hover:border-teal-500/60 hover:text-teal-400"
                                 }`}
                         >
                             {tag}
@@ -89,12 +89,16 @@ const TiltCard = ({ proyek }) => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                    <a
-                        href={proyek.link ?? "#"}
-                        className="btn-glow bg-teal-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-teal-400 transition-colors duration-200"
-                    >
-                        Lihat Demo 🚀
-                    </a>
+                    {proyek.link && (
+                        <a
+                            href={proyek.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-glow bg-teal-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-teal-400 transition-colors duration-200"
+                        >
+                            Lihat di GitHub 🚀
+                        </a>
+                    )}
                 </div>
             </div>
 
