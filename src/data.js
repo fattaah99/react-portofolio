@@ -116,6 +116,7 @@ export const listTools = [
 
 import Proyek1 from "/assets/proyek/e-commerce_flutter.png";
 import Proyek2 from "/assets/proyek/333shots_so.png";
+import Proyek3 from "/assets/proyek/dashboard-vue.png";
 
 export const listProyek = [
   {
@@ -137,5 +138,15 @@ export const listProyek = [
     kategori: "Backend",
     link: "https://github.com/fattaah99/.Net-api-E-commerce",
     dad: "300",
+  },
+  {
+    id: 3,
+    gambar: Proyek3,
+    nama: "Dashboard",
+    desk: "Aplikasi dashboard admin berbasis Vue.js dengan tampilan data interaktif dan manajemen konten yang modern.",
+    tools: ["Vue.js", "JavaScript"],
+    kategori: "Frontend",
+    link: "",
+    dad: "400",
   },
 ];
